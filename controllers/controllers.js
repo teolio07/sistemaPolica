@@ -1,15 +1,14 @@
-//const services = require('../services/services');
-//const service = new services();
-
-const connect = require('../db/database')
-const connection = new connect();
+const {dataConnection} = require('../db/database');
+const Consultas =  require('../services/consultas');
 
 class controllers{
     getCasos(req,res){
-        connection.connect();
-        let casos = connection.getCasos();
-        
-        res.send('funciona');
+        dataConnection.query(Consultas.getCasos, async function (error, results, fields) {
+            if (error) throw error;
+            console.log(results[0]);
+            res.send(results[0])
+          })
+          dataConnection.end();
     }
 
 }
